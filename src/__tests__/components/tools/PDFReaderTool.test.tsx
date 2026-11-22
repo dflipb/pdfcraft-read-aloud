@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, fireEvent, waitFor, cleanup, act } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, cleanup, act, within } from '@testing-library/react';
 import React from 'react';
 import { PDFReaderTool, SELECTED_PRINTER_STORAGE_KEY } from '@/components/tools/pdf-reader/PDFReaderTool';
 import * as tauriBridge from '@/lib/tauri-bridge';
@@ -314,10 +314,10 @@ describe('PDFReaderTool', () => {
     fireEvent.click(printBtn);
 
     await waitFor(() => {
-      expect(screen.getByRole('combobox')).toBeInTheDocument();
+      expect(within(screen.getByRole('dialog')).getByRole('combobox')).toBeInTheDocument();
     });
 
-    const select = screen.getByRole('combobox');
+    const select = within(screen.getByRole('dialog')).getByRole('combobox');
     fireEvent.change(select, { target: { value: 'SHARP MX-M3558NV' } });
 
     expect(setItemSpy).toHaveBeenCalledWith(
@@ -346,10 +346,10 @@ describe('PDFReaderTool', () => {
     fireEvent.click(printBtn);
 
     await waitFor(() => {
-      expect(screen.getByRole('combobox')).toBeInTheDocument();
+      expect(within(screen.getByRole('dialog')).getByRole('combobox')).toBeInTheDocument();
     });
 
-    const select = screen.getByRole('combobox') as HTMLSelectElement;
+    const select = within(screen.getByRole('dialog')).getByRole('combobox') as HTMLSelectElement;
     expect(select.value).toBe('SHARP MX-M3558NV');
   });
 
@@ -372,10 +372,10 @@ describe('PDFReaderTool', () => {
     fireEvent.click(printBtn);
 
     await waitFor(() => {
-      expect(screen.getByRole('combobox')).toBeInTheDocument();
+      expect(within(screen.getByRole('dialog')).getByRole('combobox')).toBeInTheDocument();
     });
 
-    const select = screen.getByRole('combobox') as HTMLSelectElement;
+    const select = within(screen.getByRole('dialog')).getByRole('combobox') as HTMLSelectElement;
     expect(select.value).toBe('HP LaserJet M14');
   });
 });

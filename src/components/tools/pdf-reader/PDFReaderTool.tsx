@@ -5,12 +5,15 @@ import { useTranslations } from 'next-intl';
 import { FileUploader } from '../FileUploader';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { Download, X, CopyCheck, Printer, RefreshCw, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { Download, X, CopyCheck, Printer, RefreshCw, CheckCircle2, AlertCircle, Loader2, Headphones } from 'lucide-react';
 import { saveBlobFile, isTauri, getSystemPrinters, printPdfFile, type SystemPrinter } from '@/lib/tauri-bridge';
 import { Modal } from '@/components/ui';
 import { withBasePath } from '@/lib/utils/path';
+import { useReadAloud } from './useReadAloud';
+import { ReadAloudPanel } from './ReadAloudPanel';
 
 export const SELECTED_PRINTER_STORAGE_KEY = 'pdfcraft-selected-printer';
+const READ_ALOUD_VISIBLE_KEY = 'pdfcraft-read-aloud-visible';
 
 export interface PDFReaderToolProps {
     className?: string;
@@ -42,6 +45,25 @@ export function PDFReaderTool({ className = '' }: PDFReaderToolProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const iframeRef = useRef<HTMLIFrameElement>(null);
     const lastCopiedRef = useRef<string>('');
+
+    // Read Aloud (text to speech)
+    const readAloud = useReadAloud({ iframeRef, docKey: pdfUrl });
+    const [showReadAloud, setShowReadAloud] = useState(true);
+    useEffect(() => {
+        try {
+            if (localStorage.getItem(READ_ALOUD_VISIBLE_KEY) === '0') setShowReadAloud(false);
+        } catch {}
+    }, []);
+    const toggleReadAloud = useCallback(() => {
+        setShowReadAloud((prev) => {
+            const next = !prev;
+            if (!next) readAloud.stop();
+            try {
+                localStorage.setItem(READ_ALOUD_VISIBLE_KEY, next ? '1' : '0');
+            } catch {}
+            return next;
+        });
+    }, [readAloud]);
 
     // Sync selected text to clipboard
     const syncSelection = useCallback((targetWindow?: Window | null) => {
@@ -303,6 +325,18 @@ export function PDFReaderTool({ className = '' }: PDFReaderToolProps) {
                                 </Button>
 
                                 <Button
+                                    variant={showReadAloud ? "secondary" : "ghost"}
+                                    size="sm"
+                                    onClick={toggleReadAloud}
+                                    className="text-xs h-7 gap-1"
+                                    title={tTools('pdfReader.readAloud.title') || 'Read aloud'}
+                                    aria-pressed={showReadAloud}
+                                >
+                                    <Headphones className={`w-3.5 h-3.5 ${showReadAloud ? 'text-primary' : 'text-muted-foreground'}`} />
+                                    <span className="hidden sm:inline">{tTools('pdfReader.readAloud.title') || 'Read aloud'}</span>
+                                </Button>
+
+                                <Button
                                     variant="ghost"
                                     size="sm"
                                     onClick={handleTriggerPrint}
@@ -319,6 +353,9 @@ export function PDFReaderTool({ className = '' }: PDFReaderToolProps) {
                             </div>
                         </div>
                     </Card>
+
+                    {/* Read Aloud controls */}
+                    {showReadAloud && <ReadAloudPanel ra={readAloud} onClose={toggleReadAloud} />}
 
                     {/* Copied to clipboard toast feedback */}
                     {copiedNotify && (

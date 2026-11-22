@@ -1293,7 +1293,7 @@ export const tools: Tool[] = [
     outputFormat: 'view',
     maxFileSize: DEFAULT_MAX_FILE_SIZE,
     maxFiles: 1,
-    features: ['page-navigation', 'zoom', 'rotate', 'fullscreen', 'print', 'download'],
+    features: ['page-navigation', 'zoom', 'rotate', 'fullscreen', 'print', 'download', 'read-aloud'],
     relatedTools: ['sign-pdf', 'edit-pdf'],
   },
   {

@@ -2675,28 +2675,29 @@ export const toolContentEn: Record<string, ToolContent> = {
 
   'pdf-reader': {
     title: 'PDF Reader',
-    metaDescription: 'Free online PDF reader. View, navigate, zoom, rotate, and print PDF documents directly in your browser.',
-    keywords: ['pdf reader', 'pdf viewer', 'view pdf online', 'read pdf', 'pdf browser viewer'],
+    metaDescription: 'Free online PDF reader with read aloud. View, navigate, zoom, print, and listen to PDF documents with natural voices, right in your browser.',
+    keywords: ['pdf reader', 'pdf viewer', 'view pdf online', 'read pdf', 'pdf read aloud', 'pdf text to speech', 'listen to pdf'],
     description: `
       <p>PDF Reader is a full-featured PDF viewer that lets you read and navigate PDF documents directly in your browser. No software installation required - just upload your PDF and start reading.</p>
-      <p>Navigate between pages, zoom in and out, rotate the view, and use fullscreen mode for distraction-free reading. You can also print documents or download them for offline access.</p>
-      <p>All viewing happens locally in your browser. Your documents are never uploaded to any server, ensuring complete privacy.</p>
+      <p>Read Aloud turns any PDF with selectable text into audio. It reads sentence by sentence, highlights what it is saying, and turns the pages for you. Use the free voices built into your browser and operating system, or connect your own ElevenLabs account for studio quality voices.</p>
+      <p>All viewing happens locally in your browser. With the free voices nothing leaves your device at all.</p>
     `,
     howToUse: [
       { step: 1, title: 'Open Your PDF', description: 'Click to upload or drag and drop a PDF file to open it in the reader.' },
       { step: 2, title: 'Navigate Pages', description: 'Use the page controls to go to the previous or next page, or jump to a specific page number.' },
-      { step: 3, title: 'Adjust View', description: 'Zoom in or out, rotate the view, or enter fullscreen mode for comfortable reading.' },
+      { step: 3, title: 'Listen with Read Aloud', description: 'Pick a voice and speed, then press play. Select text first to start from there, or click any sentence while reading to jump to it.' },
       { step: 4, title: 'Print or Download', description: 'Print the document or download it for offline access when needed.' },
     ],
     useCases: [
+      { title: 'Listen While You Work', description: 'Have papers, reports, and books read to you while commuting, exercising, or resting your eyes.', icon: 'headphones' },
+      { title: 'Accessibility', description: 'Follow along with highlighted sentences for easier reading, focus, or language learning.', icon: 'eye' },
       { title: 'Document Review', description: 'Quickly review PDF documents without installing any software.', icon: 'book-open' },
-      { title: 'Mobile Reading', description: 'Read PDF documents on any device with a web browser.', icon: 'smartphone' },
-      { title: 'Quick Preview', description: 'Preview PDFs before deciding to download or print them.', icon: 'eye' },
     ],
     faq: [
-      { question: 'Is my document secure?', answer: 'Yes, your document is processed entirely in your browser and is never uploaded to any server.' },
-      { question: 'Can I annotate or edit the PDF?', answer: 'This tool is for viewing only. Use our Sign PDF or Annotate PDF tools for editing.' },
-      { question: 'Does it work on mobile devices?', answer: 'Yes, the PDF Reader works on all devices with a modern web browser.' },
+      { question: 'Is my document secure?', answer: 'Yes, your document is processed entirely in your browser and is never uploaded to any server. With the free voices nothing is sent anywhere. If you choose ElevenLabs, only the sentences being read are sent to ElevenLabs to generate audio.' },
+      { question: 'Is Read Aloud free?', answer: 'Yes. The default voices come from your browser and operating system and cost nothing. Microsoft Edge on Windows includes natural sounding voices, and macOS and iOS let you download Enhanced voices. ElevenLabs is optional and uses your own API key and account.' },
+      { question: 'Why does Read Aloud skip some pages?', answer: 'Scanned pages are images with no selectable text. Run the OCR PDF tool on the file first, then open the result in the reader.' },
+      { question: 'Does it work on mobile devices?', answer: 'Yes, the PDF Reader and Read Aloud work in modern mobile browsers. Available voices depend on your device.' },
     ],
   },
 
